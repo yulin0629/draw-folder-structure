@@ -3,6 +3,7 @@ import { basename, resolve, sep } from 'path';
 import { Style } from '../types/style';
 import { findFiles } from './find-files';
 import { getPrefix } from './get-prefix';
+import { generateDocumentedTreeStructure } from './generate-documented-tree';
 
 export async function generateStructure(
   folderPath: string,
@@ -11,35 +12,40 @@ export async function generateStructure(
   allowRecursion: boolean = true, // Toggle recursive search
   respectGitignore: boolean = false // Toggle .gitignore usage
 ): Promise<string> {
-  let structure = '';
 
   const items = await findFiles(
-    folderPath, // Base directory
-    ['**/*'], // Include all files
-    excludePatterns, // Exclude patterns
-    allowRecursion, // Toggle recursion
-    respectGitignore // Toggle .gitignore usage
+    folderPath,       // 基底目錄
+    ['**/*'],         // 包含所有檔案
+    excludePatterns,  // 排除模式
+    allowRecursion,   // 是否遞迴
+    respectGitignore  // 是否遵循 .gitignore
   );
 
-  // Iterate over each item and generate the structure
+  if (style === Style.DocumentedTree) {    
+    const rootName = basename(folderPath) + '/\n';
+    return rootName + generateDocumentedTreeStructure(items, folderPath);
+  }
+
+  let structure = '';
+
+  // 以平坦清單方式產生結構（非 DocumentedTree 時）
   for (const [index, item] of items.entries()) {
-    const fullPath = resolve(item); // Ensure full path
+    const fullPath = resolve(item); // 確保取得完整路徑
     const isFolder = statSync(fullPath).isDirectory();
     const isLastItem = index === items.length - 1;
 
-    // Calculate the depth of the current item
+    // 計算目前項目的深度
     const currentDepth =
       fullPath.split(sep).length - folderPath.split(sep).length;
 
-    // Get the prefix for the current item
+    // 取得前置字串
     const prefix = getPrefix(
-      currentDepth, // Add one level for files
-      style, // Style
-      !isFolder, // Is file
-      isLastItem // Is last item
+      currentDepth, // 根據深度計算
+      style,        // 畫圖風格
+      !isFolder,    // 是否為檔案
+      isLastItem    // 是否為最後一項
     );
 
-    // Add the item to the structure
     structure += `${prefix}${basename(item)}\n`;
   }
 

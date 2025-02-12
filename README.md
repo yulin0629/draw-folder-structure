@@ -13,19 +13,23 @@ This extension works with vscode version 1.81.0 or higher
 - **Clipboard Integration**: Automatically copies the generated structure to the clipboard with user notification for easy pasting.
 - **Enhanced Usability**: Designed for convenience, making folder structure sharing effortless.
 - **Flexible Exclusions**: Exclude specific files and folders using glob patterns for more precise control over the generated structure.
+- **Gitignore Support**: Use the new right-click option to generate the structure while respecting your project's **.gitignore** rules.
 
 ## Usage
 
 1. Navigate to the file explorer in VS Code.
 2. Right-click on a folder or file.
-3. Select "Generate Markdown structure" from the context menu.
-4. Enjoy your folder structure in Markdown format!
+3. Choose one of the following options:
+   - **Generate Markdown structure**: 直接產生 Markdown 樣式的資料夾結構（不會遵循 .gitignore）。
+   - **Generate Markdown structure (respectGitignore)**: 產生 Markdown 資料夾結構，並自動忽略 .gitignore 中定義的檔案與資料夾。
+4. The generated Markdown representation is automatically copied to your clipboard.  
+5. Paste it into your Markdown file or documentation as needed.
 
 ## Screenshots
 
 ![Basic Usage](./src/assets/screen01.png)
 
-_Click on the option "Generate Markdown structure"._
+_Click on one of the options to generate your folder structure._
 
 ![Another Feature](./src/assets/screen02.png)
 
@@ -37,8 +41,8 @@ You can customize which folders and files to exclude in the drawing, as well as 
 
 ##### Exclude folders or files as you like
 
-For example: "node_modules" (Excluded by default).
-Just add in your **settings.json** file the line **"draw.folder.structure.exclude"** and it will show you the default excluded folders and files.
+For example: "node_modules" (Excluded by default).  
+Just add in your **settings.json** file the line **"draw.folder.structure.exclude"** and it will show you the default excluded folders and files.  
 You can modify it to your liking using glob patterns!
 
 **Examples of exclusion patterns:**
@@ -77,6 +81,7 @@ Choose from a lot of predefined designs we have to offer. By default we use "Emo
 - PipesAndHyphens
 - NestedSquares
 - CirclesAndLines
+- DocumentedTree
 
 ![Custom Setting](./src/assets/cap-style-screen.gif)
 
@@ -84,13 +89,13 @@ Choose from a lot of predefined designs we have to offer. By default we use "Emo
 
 1. Install the extension via Visual Studio Code Marketplace.
 2. Right-click on the desired folder in your VS Code file explorer.
-3. Select 'Generate Markdown Structure' from the context menu.
+3. Select either **Generate Markdown Structure** or **Generate Markdown Structure (respectGitignore)** from the context menu.
 4. The Markdown representation of the folder structure is automatically copied to your clipboard.
 5. Paste it into your Markdown file or documentation as needed.
 
 ## Support and Contribution
 
-For support queries or to contribute to this project, please visit our GitHub repository or contact us at [jm.krivocapich@gmail.com]('').
+For support queries or to contribute to this project, please visit our GitHub repository or contact us at [jm.krivocapich@gmail.com]('').  
 
 #### Contributions
 
@@ -98,8 +103,8 @@ Contributions are welcome. If you encounter any problems or have any suggestions
 
 ## Made by
 
-**Krivoox**
-[Follow me on X](https://twitter.com/jkrivoox)
+**Krivoox**  
+[Follow me on X](https://twitter.com/jkrivoox)  
 [My linkedin](https://www.linkedin.com/in/juan-manuel-krivocapich/)
 
 ## License

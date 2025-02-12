@@ -2,7 +2,7 @@
   "name": "drawfolderstructure",
   "displayName": "Draw Folder Structure",
   "description": "Generate markdown representations of your folder and file structure",
-  "version": "1.4.0",
+  "version": "1.4.2",
   "repository": {
     "type": "git",
     "url": "https://github.com/krivoox/draw-folder-structure"
@@ -25,12 +25,20 @@
       {
         "command": "extension.generateMarkdownStructure",
         "title": "Generate Markdown structure"
+      },
+      {
+        "command": "extension.generateMarkdownStructureRespectGitignore",
+        "title": "Generate Markdown structure (respectGitignore)"
       }
     ],
     "menus": {
       "explorer/context": [
         {
           "command": "extension.generateMarkdownStructure",
+          "when": "resourceScheme == file"
+        },
+        {
+          "command": "extension.generateMarkdownStructureRespectGitignore",
           "when": "resourceScheme == file"
         }
       ]
@@ -54,10 +62,14 @@
           "default": "EmojiDashes",
           "enum": [
             "ClassicDashes",
+            "SparklesDesing",
+            "TrailDesign",
+            "FloralDesign",
+            "GalacticDesign",
             "MinimalistDots",
+            "EmojiDashes",
             "EmojiFun",
             "EmojiMinimalist",
-            "EmojiDashes",
             "Arrows",
             "NestedCircles",
             "BoldBlocks",
@@ -69,10 +81,7 @@
             "PipesAndHyphens",
             "NestedSquares",
             "CirclesAndLines",
-            "SparklesDesing",
-            "TrailDesign",
-            "FloralDesign",
-            "GalacticDesign"
+            "DocumentedTree"
           ],
           "description": "Drawing style for folder structure."
         }

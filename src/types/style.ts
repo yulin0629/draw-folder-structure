@@ -20,4 +20,5 @@ export enum Style {
   PipesAndHyphens = 'PipesAndHyphens',
   NestedSquares = 'NestedSquares',
   CirclesAndLines = 'CirclesAndLines',
+  DocumentedTree = 'DocumentedTree'  // <<-- 新增此 style
 }

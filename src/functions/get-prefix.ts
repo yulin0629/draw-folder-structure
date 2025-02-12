@@ -37,6 +37,7 @@ export const getPrefix: GetPrefixFunction = (
     [Style.FloralDesign]: `${repeatStr}🌸📁 `,
     [Style.GalacticDesign]: `${repeatStr}🌌📁 `,
     [Style.EmojiDashes]: `${repeatStr}└── 📁`,
+    [Style.DocumentedTree]: `${repeatStr}` // 不使用，因 DocumentedTree 採遞迴產生
   };
 
   const filePrefixes: Record<Style, string> = {
@@ -60,6 +61,7 @@ export const getPrefix: GetPrefixFunction = (
     [Style.FloralDesign]: `${repeatStr}🌸📄 `,
     [Style.GalacticDesign]: `${repeatStr}🌌📄 `,
     [Style.EmojiDashes]: `${repeatStr}├── `,
+    [Style.DocumentedTree]: `${repeatStr}` // 不使用
   };
 
   const lastItemPrefixes: Record<Style, string> = {
@@ -83,6 +85,7 @@ export const getPrefix: GetPrefixFunction = (
     [Style.FloralDesign]: `${repeatStr}🌸📄 `,
     [Style.GalacticDesign]: `${repeatStr}🌌📄 `,
     [Style.EmojiDashes]: `${repeatStr}└── `,
+    [Style.DocumentedTree]: `${repeatStr}` // 不使用
   };
 
   if (isFile) {
