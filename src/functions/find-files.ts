@@ -37,9 +37,12 @@ export async function findFiles(
     // Filter out files ignored by .gitignore patterns
     const filteredPaths = gitignore
       ? filePaths.filter((filePath) => {
-          const relativePath = relative(baseDir, filePath); // Convert to relative paths
-          return gitignore ? !gitignore.ignores(relativePath) : true;
-        })
+        const relativePath = relative(baseDir, filePath);
+        // 如果 filePath 是目錄，但相對路徑沒有尾隨斜線，則補上斜線
+        const isDirectory = statSync(filePath).isDirectory();
+        const testPath = isDirectory && !relativePath.endsWith('/') ? relativePath + '/' : relativePath;
+        return !gitignore.ignores(testPath);
+      })
       : filePaths;
 
     // Separate base level files from

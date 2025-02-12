@@ -2,6 +2,13 @@
 
 All notable changes to the "Draw Folder Structure" extension will be documented in this file.
 
+## [1.4.3] - 2025-02-11
+
+### Fixed
+- 修復了在使用 respectGitignore 選項時，目錄匹配的問題
+  - 改進了 .gitignore 規則的處理邏輯，現在會正確處理目錄的匹配
+  - 確保目錄路徑在匹配 .gitignore 規則時會包含結尾的斜線
+
 ## [1.4.2] - 2025-02-10
 
 ### Added

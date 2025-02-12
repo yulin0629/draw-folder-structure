@@ -5,7 +5,7 @@ import { generateStructure } from './functions/generate-structure';
 import { getPrefix } from './functions/get-prefix';
 import { Style } from './types/style';
 
-const CURRENT_VERSION = '1.4.2';
+const CURRENT_VERSION = '1.4.3';
 
 export function activate(context: vscode.ExtensionContext) {
   const previousVersion = context.globalState.get<string>('extensionVersion');
