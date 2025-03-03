@@ -5,7 +5,7 @@ import { generateStructure } from './functions/generate-structure';
 import { getPrefix } from './functions/get-prefix';
 import { Style } from './types/style';
 
-const CURRENT_VERSION = '1.4.3';
+const CURRENT_VERSION = '1.4.4';
 
 export function activate(context: vscode.ExtensionContext) {
   const previousVersion = context.globalState.get<string>('extensionVersion');
@@ -25,21 +25,17 @@ export function activate(context: vscode.ExtensionContext) {
       const stats = statSync(folderPath);
       let markdownStructure = '';
 
-      const excludePatterns: string[] =
-        vscode.workspace
-          .getConfiguration('draw.folder.structure')
-          .get('exclude') || [];
-
-      const style: Style =
-        vscode.workspace
-          .getConfiguration('draw.folder.structure')
-          .get('style') || Style.EmojiDashes;
+      const config = vscode.workspace.getConfiguration('draw.folder.structure');
+      
+      const excludePatterns: string[] = config.get('exclude') || [];
+      const style: Style = config.get('style') || Style.EmojiDashes;
+      
+      // Get the new configuration options
+      const respectGitignore: boolean = config.get('respectGitignore') || false;
+      const folderOnly: boolean = config.get('folderOnly') || false;
 
       // TODO: Implement this feature in the future (allowRecursion)
-      const allowRecursion: boolean = true; // getConfiguration('draw.folder.structure').get('allowRecursion')
-
-      // 此命令預設不遵循 .gitignore
-      const respectGitignore: boolean = false;
+      const allowRecursion: boolean = true; // config.get('allowRecursion')
 
       if (stats.isDirectory()) {
         if (style === Style.DocumentedTree) {
@@ -49,7 +45,8 @@ export function activate(context: vscode.ExtensionContext) {
             excludePatterns,
             style,
             allowRecursion,
-            respectGitignore
+            respectGitignore,
+            folderOnly
           );
         } else {
           // 其他 style 先印出根目錄名稱，再遞迴產生結構
@@ -59,7 +56,8 @@ export function activate(context: vscode.ExtensionContext) {
             excludePatterns,
             style,
             allowRecursion,
-            respectGitignore
+            respectGitignore,
+            folderOnly
           );
         }
       } else {
@@ -69,7 +67,7 @@ export function activate(context: vscode.ExtensionContext) {
       markdownStructure = '```\n' + markdownStructure + '```';
 
       vscode.env.clipboard.writeText(markdownStructure).then(() => {
-        // Muestra una notificación
+        // Show a notification
         vscode.window.showInformationMessage(
           'Markdown structure copied to clipboard!'
         );
@@ -83,72 +81,7 @@ export function activate(context: vscode.ExtensionContext) {
     }
   );
 
-  let disposableGitignore = vscode.commands.registerCommand(
-    'extension.generateMarkdownStructureRespectGitignore',
-    async (folder: vscode.Uri) => {
-      const folderPath = folder.fsPath;
-      const itemName = basename(folderPath);
-      const stats = statSync(folderPath);
-      let markdownStructure = '';
-
-      const excludePatterns: string[] =
-        vscode.workspace
-          .getConfiguration('draw.folder.structure')
-          .get('exclude') || [];
-
-      const style: Style =
-        vscode.workspace
-          .getConfiguration('draw.folder.structure')
-          .get('style') || Style.EmojiDashes;
-
-      // TODO: Implement this feature in the future (allowRecursion)
-      const allowRecursion: boolean = true; // getConfiguration('draw.folder.structure').get('allowRecursion')
-
-      // 此命令啟用 respectGitignore
-      const respectGitignore: boolean = true;
-
-      if (stats.isDirectory()) {
-        if (style === Style.DocumentedTree) {
-          // 若為 DocumentedTree 風格，直接呼叫新函式產生樹狀結構
-          markdownStructure = await generateStructure(
-            folderPath,
-            excludePatterns,
-            style,
-            allowRecursion,
-            respectGitignore
-          );
-        } else {
-          // 其他 style 先印出根目錄名稱，再遞迴產生結構
-          markdownStructure += getPrefix(0, style) + itemName + '\n';
-          markdownStructure += await generateStructure(
-            folderPath,
-            excludePatterns,
-            style,
-            allowRecursion,
-            respectGitignore
-          );
-        }
-      } else {
-        markdownStructure = getPrefix(0, style, true) + itemName + '\n';
-      }
-
-      markdownStructure = '```\n' + markdownStructure + '```';
-
-      vscode.env.clipboard.writeText(markdownStructure).then(() => {
-        vscode.window.showInformationMessage(
-          'Markdown structure (with respectGitignore) copied to clipboard!'
-        );
-      });
-
-      vscode.workspace
-        .openTextDocument({ content: markdownStructure, language: 'markdown' })
-        .then((doc) => {
-          vscode.window.showTextDocument(doc);
-        });
-    }
-  );
-
-  context.subscriptions.push(disposable, disposableGitignore);
+  context.subscriptions.push(disposable);
 }
 
 export function deactivate() {}

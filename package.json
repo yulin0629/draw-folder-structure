@@ -2,7 +2,7 @@
   "name": "drawfolderstructure",
   "displayName": "Draw Folder Structure",
   "description": "Generate markdown representations of your folder and file structure",
-  "version": "1.4.3",
+  "version": "1.4.4",
   "repository": {
     "type": "git",
     "url": "https://github.com/krivoox/draw-folder-structure"
@@ -25,20 +25,12 @@
       {
         "command": "extension.generateMarkdownStructure",
         "title": "Generate Markdown structure"
-      },
-      {
-        "command": "extension.generateMarkdownStructureRespectGitignore",
-        "title": "Generate Markdown structure (respectGitignore)"
       }
     ],
     "menus": {
       "explorer/context": [
         {
           "command": "extension.generateMarkdownStructure",
-          "when": "resourceScheme == file"
-        },
-        {
-          "command": "extension.generateMarkdownStructureRespectGitignore",
           "when": "resourceScheme == file"
         }
       ]
@@ -84,6 +76,16 @@
             "DocumentedTree"
           ],
           "description": "Drawing style for folder structure."
+        },
+        "draw.folder.structure.respectGitignore": {
+          "type": "boolean",
+          "default": false,
+          "description": "Whether to respect .gitignore patterns when generating the structure."
+        },
+        "draw.folder.structure.folderOnly": {
+          "type": "boolean",
+          "default": false,
+          "description": "When true, only folders will be included in the structure."
         }
       }
     }

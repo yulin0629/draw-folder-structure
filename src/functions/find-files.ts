@@ -8,7 +8,8 @@ export async function findFiles(
   include: string[], // Include patterns
   exclude: string[], // Exclude patterns
   allowRecursion: boolean = true, // Toggle recursive search
-  respectGitignore: boolean = false // Toggle .gitignore usage
+  respectGitignore: boolean = false, // Toggle .gitignore usage
+  folderOnly: boolean = false // Toggle folder-only mode
 ): Promise<string[]> {
   // If we need to respect .gitignore, we need to load it
   let gitignore: Ignore | undefined;
@@ -35,7 +36,7 @@ export async function findFiles(
     const filePaths = await fastGlob(include, options);
 
     // Filter out files ignored by .gitignore patterns
-    const filteredPaths = gitignore
+    let filteredPaths = gitignore
       ? filePaths.filter((filePath) => {
         const relativePath = relative(baseDir, filePath);
         // 如果 filePath 是目錄，但相對路徑沒有尾隨斜線，則補上斜線
@@ -44,6 +45,13 @@ export async function findFiles(
         return !gitignore.ignores(testPath);
       })
       : filePaths;
+
+    // If folderOnly is true, filter out all non-directory items
+    if (folderOnly) {
+      filteredPaths = filteredPaths.filter((filePath) => {
+        return statSync(filePath).isDirectory();
+      });
+    }
 
     // Separate base level files from
     const baseLevelFiles = [];

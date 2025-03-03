@@ -2,6 +2,13 @@
 
 All notable changes to the "Draw Folder Structure" extension will be documented in this file.
 
+## [1.4.4] - 2025-03-03
+
+### Changed
+- 將 respectGitignore 功能從獨立命令改為設定選項
+  - 移除了 **Generate Markdown structure (respectGitignore)** 命令
+  - 新增了 `draw.folder.structure.respectGitignore` 設定選項，預設為 false
+- 新增了 `draw.folder.structure.folderOnly` 設定選項，當設為 true 時只會顯示資料夾
 ## [1.4.3] - 2025-02-11
 
 ### Fixed

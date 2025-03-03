@@ -10,7 +10,8 @@ export async function generateStructure(
   excludePatterns: string[],
   style: Style,
   allowRecursion: boolean = true, // Toggle recursive search
-  respectGitignore: boolean = false // Toggle .gitignore usage
+  respectGitignore: boolean = false, // Toggle .gitignore usage
+  folderOnly: boolean = false // Toggle folder-only mode
 ): Promise<string> {
 
   const items = await findFiles(
@@ -18,7 +19,8 @@ export async function generateStructure(
     ['**/*'],         // 包含所有檔案
     excludePatterns,  // 排除模式
     allowRecursion,   // 是否遞迴
-    respectGitignore  // 是否遵循 .gitignore
+    respectGitignore, // 是否遵循 .gitignore
+    folderOnly        // 是否只顯示資料夾
   );
 
   if (style === Style.DocumentedTree) {    

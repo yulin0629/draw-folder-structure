@@ -13,15 +13,14 @@ This extension works with vscode version 1.81.0 or higher
 - **Clipboard Integration**: Automatically copies the generated structure to the clipboard with user notification for easy pasting.
 - **Enhanced Usability**: Designed for convenience, making folder structure sharing effortless.
 - **Flexible Exclusions**: Exclude specific files and folders using glob patterns for more precise control over the generated structure.
-- **Gitignore Support**: Use the new right-click option to generate the structure while respecting your project's **.gitignore** rules.
+- **Gitignore Support**: Enable the `respectGitignore` setting to generate the structure while respecting your project's **.gitignore** rules.
+- **Folder-Only Mode**: Enable the `folderOnly` setting to only include folders in the generated structure.
 
 ## Usage
 
 1. Navigate to the file explorer in VS Code.
 2. Right-click on a folder or file.
-3. Choose one of the following options:
-   - **Generate Markdown structure**: 直接產生 Markdown 樣式的資料夾結構（不會遵循 .gitignore）。
-   - **Generate Markdown structure (respectGitignore)**: 產生 Markdown 資料夾結構，並自動忽略 .gitignore 中定義的檔案與資料夾。
+3. Choose **Generate Markdown structure** from the context menu.
 4. The generated Markdown representation is automatically copied to your clipboard.  
 5. Paste it into your Markdown file or documentation as needed.
 
@@ -29,7 +28,7 @@ This extension works with vscode version 1.81.0 or higher
 
 ![Basic Usage](./src/assets/screen01.png)
 
-_Click on one of the options to generate your folder structure._
+_Click on the option to generate your folder structure._
 
 ![Another Feature](./src/assets/screen02.png)
 
@@ -38,6 +37,15 @@ _A file with the drawing of the structure will be generated._
 ## Customization
 
 You can customize which folders and files to exclude in the drawing, as well as choose from many markdown layouts.
+
+### Extension Settings
+
+The extension provides the following settings:
+
+- `draw.folder.structure.exclude`: File and folder patterns to exclude when generating the Markdown structure.
+- `draw.folder.structure.style`: Drawing style for folder structure.
+- `draw.folder.structure.respectGitignore`: When true, respects .gitignore patterns when generating the structure.
+- `draw.folder.structure.folderOnly`: When true, only folders will be included in the structure.
 
 ##### Exclude folders or files as you like
 
@@ -89,7 +97,7 @@ Choose from a lot of predefined designs we have to offer. By default we use "Emo
 
 1. Install the extension via Visual Studio Code Marketplace.
 2. Right-click on the desired folder in your VS Code file explorer.
-3. Select either **Generate Markdown Structure** or **Generate Markdown Structure (respectGitignore)** from the context menu.
+3. Select **Generate Markdown Structure** from the context menu.
 4. The Markdown representation of the folder structure is automatically copied to your clipboard.
 5. Paste it into your Markdown file or documentation as needed.
 
